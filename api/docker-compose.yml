@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  #API
+  academia-api:
+    container_name: academia-api
+    build: ./
+    command: flask run --host=0.0.0.0
+    working_dir: /usr/src/projeto_academia
+    ports:
+      - "5000:5000"
+    expose:
+      - 8080
+    volumes:
+      - ./:/usr/src/projeto_academia
+    environment:
+      FLASK_APP: server.py
+      FLASK_ENV: development
+      PYTHONUNBUFFERED: 1
+    links:
+      - mariadb
+
+  #Banco de Dados
+  mariadb:
+    build: ./mariadb
+    container_name: bd
+    ports:
+      - "3305:3306"
+    environment:
+      MARIADB_DATABASE: academia
+      MARIADB_USER: acadadmin
+      MARIADB_PASSWORD: acad123
+      MARIADB_ROOT_PASSWORD: acad123
