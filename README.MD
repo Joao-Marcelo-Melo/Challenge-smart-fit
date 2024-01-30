@@ -57,10 +57,6 @@
 
   
 
-Here you list all prerequisites necessary for running your project. For example:
-
-  
-
 -  [NodeJS](https://github.com/)
 
 -  [Git 2](https://github.com)
