@@ -26,6 +26,7 @@ const viewModel = () => {
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
+        setErrorMessage('')
         try {
             const response = await submitForm({
                 "horario": selectedHour,
