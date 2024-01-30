@@ -17,7 +17,14 @@
 
     width: 320px;
     height: 400px;
-    
+    cursor: pointer;
+    transition: transform 0.9s;
+}
+
+.card:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .card .divider {
@@ -65,7 +72,7 @@
 }
 
 .card li b {
-    font-size: 20   px;
+    font-size: 20 px;
     color: var(--dark-grey);
 }
 
