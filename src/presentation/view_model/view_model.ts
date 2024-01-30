@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { submitForm } from '../../repositories/auth_repository';
-// import { GymModel } from '../../models/gym_model';
 import React, { useContext } from "react";
 import { GymContext } from '../../context/form_context';
 
@@ -9,6 +8,8 @@ const viewModel = () => {
     const [selectedHour, setSelectedHour] = useState<string>('');
     const [responseCount, setResponseCount] = useState<number>(0)
     const [ShowClosed, SetShowClosed] = useState<boolean>(false)
+    const [errorMessage, setErrorMessage] = useState<string>('')
+    const [sucessMessage, setSucessMessage] = useState<string>('')
     const { gyms, saveGyms } = useContext(GymContext);
 
     const handleChangeHour = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,25 +26,25 @@ const viewModel = () => {
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
-        const response = await submitForm({
-            "horario": selectedHour,
-            "incluir_fechadas": ShowClosed
-        })
-
-        if (Array.isArray(response)) {
-            const arrayLength = response.length
-            setResponseCount(arrayLength)
+        try {
+            const response = await submitForm({
+                "horario": selectedHour,
+                "incluir_fechadas": ShowClosed
+            })
+    
+            if (Array.isArray(response)) {
+                const arrayLength = response.length
+                setResponseCount(arrayLength)
+            }
+            saveGyms(response)
+            setSucessMessage('Academias listadas com sucesso ✔️')
+        } catch (error: any) {
+            if (error.request) {
+                setErrorMessage('Não foi possivel se conectar com o servidor ❌')
+            } else {
+                setErrorMessage('Não foi possivel Listar as academias')
+            }
         }
-
-        saveGyms(response)
-        console.log(gyms[0].mascara)
-        console.log(gyms)
-    }
-
-    const mapCards = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault()
-        console.log(gyms)
-        console.log(responseCount)
     }
 
     const handleClear = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,6 +53,8 @@ const viewModel = () => {
         SetShowClosed(false)
         setResponseCount(0)
         saveGyms([])
+        setErrorMessage('')
+        setSucessMessage('')
     }
 
     return {
@@ -62,8 +65,9 @@ const viewModel = () => {
         HandleShowClosed,
         handleSubmit,
         handleClear,
-        mapCards,
-        gyms
+        gyms,
+        errorMessage,
+        sucessMessage
     }
 }
 

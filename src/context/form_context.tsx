@@ -14,7 +14,6 @@ const GymProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
 
     const saveGyms = (gym: GymModel[]) => {
         setGyms(gym)
-        console.log(gyms)
     }
 
     return (

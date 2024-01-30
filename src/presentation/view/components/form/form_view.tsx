@@ -6,7 +6,7 @@ import viewModel from '../../../view_model/view_model';
 
 export function FormComponent(): ReactElement {
 
-  const { selectedHour, responseCount, ShowClosed, handleChangeHour, HandleShowClosed, handleSubmit, handleClear } = viewModel();
+  const { selectedHour, responseCount, ShowClosed, handleChangeHour, HandleShowClosed, handleSubmit, handleClear, errorMessage, sucessMessage } = viewModel();
 
   return (
     <form className="form-group">
@@ -40,6 +40,10 @@ export function FormComponent(): ReactElement {
       <div className="btn-wrapper">
         <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Encontrar unidade</button>
         <button type="button" className="btn btn-secondary" onClick={handleClear}>Limpar</button>
+      </div>
+      <div className='messages'>
+        <p className='sucess-message'>{sucessMessage}</p>
+        <p className='error-message'>{errorMessage}</p>
       </div>
     </form>
   );

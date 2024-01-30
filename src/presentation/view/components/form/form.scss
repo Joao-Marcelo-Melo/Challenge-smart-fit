@@ -108,7 +108,26 @@
     margin-right: 4px;
 }
 
-@media (min-width: 768px) {
+.messages {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-top: 10px;
+}
+
+.messages p {
+    font-size: 18px;
+}
+
+.error-message {
+    color: var(--red);
+}
+
+.sucess-message {
+    color: var(--green);
+}   
+
+@media (min-width: 900px) {
     .form-group .btn-wrapper {
         flex-direction: row;
     }
@@ -120,5 +139,12 @@
     .form-group .checkbox-wrapper {
         flex-direction: row;
         justify-content: space-between;
+    }
+    
+}
+
+@media (max-width: 900px) {
+    .messages {
+       justify-content: center;
     }
 }
