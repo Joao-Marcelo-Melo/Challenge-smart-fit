@@ -194,12 +194,13 @@ def inadimplentes_mes():
 
 @app.route("/localizacoes", methods=["GET"])
 def academias():
-    incluir_fechadas = request.args.get('incluir_fechadas', type=bool)
-    horarios = request.args.getlist('horario')
-    query = select_localizacoes if incluir_fechadas else select_localizacoes_abertas
-    localizacoes = json.loads(run_select_query(query))
+    args = request.args
+    incluir_fechadas = args.get('incluir_fechadas', default=True, type=is_it_true)
+    horarios = args.get('horarios')
+    # request_data = request.get_json()
+    query = select_localizacoes if incluir_fechadas == True else select_localizacoes_abertas
+    localizacoes=json.loads(run_select_query(query))
     data = []
-
     for localizacao in localizacoes:
         localizacao_dict = {
             "id": localizacao[0],
@@ -212,17 +213,17 @@ def academias():
             "vestiario": localizacao[7],
             "agendamentos": []
         }
-        time_values = ', '.join([f"{value}" for value in horarios])
+        time_values = ', '.join([f"{horarios}"])
         len_agendamentos = json.loads(run_select_query(count_agendamentos, (localizacao[0], time_values)))[0][0]
-
-        if len_agendamentos > 0:
+        if(len_agendamentos > 0):
             agendamentos = json.loads(run_select_query(select_agendamentos, (localizacao[0],)))
             for agendamento in agendamentos:
                 localizacao_dict["agendamentos"].append({"dias_semana": agendamento[0], "horarios": agendamento[1]})
             data.append(localizacao_dict)
+    return data
 
-    return jsonify(data)
-
+def is_it_true(value):
+  return value.lower() == 'true'
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

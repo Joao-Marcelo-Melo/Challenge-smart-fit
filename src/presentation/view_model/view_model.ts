@@ -29,7 +29,7 @@ const viewModel = () => {
         setErrorMessage('')
         try {
             const response = await submitForm({
-                "horario": selectedHour,
+                "horarios": selectedHour,
                 "incluir_fechadas": ShowClosed
             })
     
