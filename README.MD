@@ -21,7 +21,7 @@
 
 <p align="center">
 
-<a  href="PROJECT__URL">📱 Visit this Project</a>
+<a  href="challenge-smart-fit.vercel.app">📱 Visit this Project</a>
 
 </p>
 
